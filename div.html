@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Εμφάνιση Μηνυμάτων</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: url('dep.png.jpg') no-repeat center center fixed; /* Εικόνα φόντου */
+            background-size: cover; /* Η εικόνα καλύπτει ολόκληρη την οθόνη */
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+        .message-container {
+            position: absolute;
+            font-size: 2em;
+            padding: 20px;
+            background: black;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(255, 255, 255, 0.3);
+            text-align: center;
+            width: auto;
+            max-width: 60%;
+        }
+        
+        /* Fade-in + Scale-up Animation */
+        .fade-in-scale {
+            animation: fadeInScale 1s ease-out;
+        }
+        @keyframes fadeInScale {
+            from {
+                opacity: 0;
+                transform: scale(0.5);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        
+        /* Flip & Reveal Animation */
+        .flip-reveal {
+            animation: flipReveal 1s ease-out;
+            transform-style: preserve-3d;
+        }
+        @keyframes flipReveal {
+            from {
+                transform: rotateY(90deg);
+                opacity: 0;
+            }
+            to {
+                transform: rotateY(0deg);
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="messageArea"></div>
+    
+    <script>
+        function showMessage(text) {
+            const messageDiv = document.createElement('div');
+            messageDiv.classList.add('message-container');
+            messageDiv.textContent = text;
+            
+            // Επιλογή εφέ τυχαία
+            const animationType = Math.random() > 0.5 ? 'fade-in-scale' : 'flip-reveal';
+            messageDiv.classList.add(animationType);
+            
+            document.body.appendChild(messageDiv);
+            
+            // Τοποθέτηση σε τυχαίο σημείο της οθόνης
+            messageDiv.style.top = `${Math.random() * 60 + 20}%`;
+            messageDiv.style.left = `${Math.random() * 60 + 20}%`;
+            
+            // Διαγραφή μετά από 5 δευτερόλεπτα
+            setTimeout(() => {
+                messageDiv.remove();
+            }, 5000);
+        }
+        
+        // Test Messages (Σβήσε το και βάλε WebSocket για live updates)
+        setInterval(() => {
+            const testMessages = ['Χρόνια πολλά μαμά!', 'Σε αγαπώ πολύ!', 'Είσαι η καλύτερη!', 'Ευχαριστώ για όλα!'];
+            const randomMessage = testMessages[Math.floor(Math.random() * testMessages.length)];
+            showMessage(randomMessage);
+        }, 3000);
+    </script>
+</body>
+</html>

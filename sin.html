@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Μηνύματα σε Συννεφάκια</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: url('dep.png.jpg') no-repeat center center fixed; /* Εικόνα φόντου */
+            background-size: cover; /* Η εικόνα καλύπτει ολόκληρη την οθόνη */
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            position: relative;
+        }
+
+
+        .cloud {
+            position: absolute;
+            padding: 20px;
+            font-size: 1.2em;
+            color: #fff;
+            background: black;
+            border-radius: 20px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+            opacity: 0;
+            animation: floatUp 10s ease-in-out forwards; /* Το animation διαρκεί 10 δευτερόλεπτα */
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+            80% {
+                transform: translateY(-200px);
+                opacity: 1; /* Διατηρείται ορατό μέχρι το 80% */
+            }
+            100% {
+                transform: translateY(-250px);
+                opacity: 0; /* Εξασθενεί σταδιακά */
+            }
+        }
+    </style>
+</head>
+<body>
+    <script>
+        function showCloudMessage(text) {
+            const cloudDiv = document.createElement('div');
+            cloudDiv.classList.add('cloud');
+            cloudDiv.textContent = text;
+
+            // Τοποθέτηση του συννεφιού σε τυχαία θέση
+            cloudDiv.style.left = `${Math.random() * 80 + 10}%`;
+            cloudDiv.style.top = `${Math.random() * 60 + 20}%`;
+
+            document.body.appendChild(cloudDiv);
+
+            // Διαγραφή του συννεφιού μετά από 10 δευτερόλεπτα (αντιστοιχεί στο χρόνο του animation)
+            setTimeout(() => {
+                cloudDiv.remove();
+            }, 10000); // 10 δευτερόλεπτα
+        }
+
+        // Συνεχής εμφάνιση μηνυμάτων με πιο γρήγορο ρυθμό
+        const messages = [
+            "Χρόνια Πολλά Μαμά! ❤️",
+            "Σε αγαπάμε πολύ! 🌸",
+            "Είσαι η καλύτερη! 🎈",
+            "Ευχαριστούμε που υπάρχεις! 🌟",
+            "Είσαι ξεχωριστή! 💖"
+        ];
+        setInterval(() => {
+            const randomMessage = messages[Math.floor(Math.random() * messages.length)];
+            showCloudMessage(randomMessage);
+        }, 2000); // Εμφανίζει νέο μήνυμα κάθε 2 δευτερόλεπτα
+    </script>
+</body>
+</html>

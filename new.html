@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Φάκελος Μαυρόασπρος</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: url('dep.png.jpg') no-repeat center center fixed;
+            background-size: cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .envelope-container {
+            position: absolute;
+            width: 220px;
+            height: 160px;
+            perspective: 1000px;
+            transition: opacity 1s ease-in-out;
+        }
+
+        .envelope {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        .envelope-top {
+            position: absolute;
+            width: 100%;
+            height: 50%;
+            background: #d4af37;
+            top: 0;
+            clip-path: polygon(50% 0, 100% 100%, 0 100%);
+            transform-origin: bottom;
+            transform: rotateX(0);
+            transition: transform 1.5s ease-in-out;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            z-index: 2;
+        }
+
+        .envelope-body {
+            position: absolute;
+            width: 100%;
+            height: 60%;
+            bottom: 0;
+            background-color: #8B4513;
+            color: #fff;
+            border: 2px solid #fff;
+            border-radius: 5px;
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1em;
+        }
+
+        .message {
+            position: absolute;
+            width: 180px;
+            background-color: black;
+            padding: 10px;
+            border-radius: 10px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            font-size: 1em;
+            font-weight: bold;
+            color: white;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 1s ease-in-out, transform 1s ease-in-out;
+            top: -70px;
+            left: 10px;
+        }
+    </style>
+</head>
+<body>
+    <script>
+        function showEnvelopeMessage(text) {
+            const envelopeContainer = document.createElement('div');
+            envelopeContainer.classList.add('envelope-container');
+            
+            const envelope = document.createElement('div');
+            envelope.classList.add('envelope');
+            
+            const topFlap = document.createElement('div');
+            topFlap.classList.add('envelope-top');
+            
+            const bodyPart = document.createElement('div');
+            bodyPart.classList.add('envelope-body');
+            
+            const message = document.createElement('div');
+            message.classList.add('message');
+            message.textContent = text;
+            
+            envelope.appendChild(topFlap);
+            envelope.appendChild(bodyPart);
+            envelopeContainer.appendChild(envelope);
+            envelopeContainer.appendChild(message);
+            
+            document.body.appendChild(envelopeContainer);
+            
+            envelopeContainer.style.top = `${Math.random() * 60 + 10}%`;
+            envelopeContainer.style.left = `${Math.random() * 60 + 10}%`;
+            
+            setTimeout(() => {
+                topFlap.style.transform = "rotateX(-150deg)";
+                
+                setTimeout(() => {
+                    message.style.opacity = 1;
+                    message.style.transform = "translateY(0)";
+                }, 1000);
+            }, 1000);
+            
+            setTimeout(() => {
+                envelopeContainer.style.opacity = 0;
+                setTimeout(() => {
+                    envelopeContainer.remove();
+                }, 1000);
+            }, 5000);
+        }
+        
+        const messages = ["Χρόνια Πολλά Μαμά! ❤️", "Σε αγαπάμε πολύ! 🌸", "Είσαι η καλύτερη! 🎈", "Είσαι ξεχωριστή! 🌟", "Ευχαριστούμε που υπάρχεις! 💖"];
+        let counter = 0;
+        setInterval(() => {
+            showEnvelopeMessage(messages[counter % messages.length]);
+            counter++;
+        }, 3000);
+    </script>
+</body>
+</html>
